@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">projectApp</string>
+    <string name="app_name">CommonRoom</string>
+
+    <string-array name="dorm_array">
+        <item>Brecon</item>
+        <item>Denbigh</item>
+        <item>New Dorm</item>
+        <item>Erdman</item>
+        <item>Merion</item>
+        <item>Pembroke East</item>
+        <item>Pembroke West</item>
+        <item>Radnor</item>
+        <item>Rhoads North</item>
+        <item>Rhoads South</item>
+        <item>Rockefeller</item>
+    </string-array>
 </resources>

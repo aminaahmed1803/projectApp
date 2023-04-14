@@ -19,7 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -32,7 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
-
 
         <TextView
             android:layout_width="match_parent"
@@ -49,22 +47,22 @@
             android:gravity="center"
             android:orientation="horizontal" />
 
-
         <Button
             android:id="@+id/logIn_button"
             android:layout_width="116dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#8389AF4C"
-            android:text="Log In" />
+            android:text="Log In"
+            android:onClick="onLogInClick"/>
 
         <Button
             android:id="@+id/signUp_button"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#8389AF4C"
-            android:text="Sign Up" />
+            android:text="Sign Up"
+            android:onClick= "onSignUpClick"/>
 
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
