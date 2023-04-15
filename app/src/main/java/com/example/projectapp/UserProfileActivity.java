@@ -22,8 +22,10 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
         collegeEmail = getIntent().getStringExtra("cemail");
-        //System.out.println(collegeEmail);
+        displayInfo();
+    }
 
+    public void displayInfo(){
         try {
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute( () -> {
@@ -33,7 +35,6 @@ public class UserProfileActivity extends AppCompatActivity {
                     conn.setRequestMethod("GET");
                     conn.connect();
                     Scanner in = new Scanner(url.openStream());
-                    boolean done = false;
                     while (in.hasNext()) {
                         String response = in.nextLine();
                         System.out.println("response: " + response);
@@ -49,7 +50,6 @@ public class UserProfileActivity extends AppCompatActivity {
                                 password = jo.getString("password");
                                 studentID = jo.getString("id");
                                 classYear = jo.getString("classYear");
-                                done = true;
 
                                 TextView pwd = findViewById(R.id.password);
                                 TextView fname = findViewById(R.id.firstname);
@@ -65,18 +65,14 @@ public class UserProfileActivity extends AppCompatActivity {
                                 email.setText(collegeEmail);
                                 id.setText(studentID);
 
-                                break;
+                                return;
                             }
                         }
-                        System.out.println("STAYYYY");
-                        if (done) break;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.out.println("test");
                 }
             });
-            System.out.println("test2");
         } catch (Exception e) {
             e.printStackTrace();
         }

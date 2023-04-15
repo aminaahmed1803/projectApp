@@ -37,6 +37,7 @@
         <activity android:name=".AvailRoomsActivity"/>
         <activity android:name=".DeleteDorm" />
         <activity android:name=".TestHomePage"/>
+        <activity android:name=".deleteUser"/>
     </application>
 
 </manifest>

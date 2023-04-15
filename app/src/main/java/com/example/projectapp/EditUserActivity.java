@@ -21,6 +21,8 @@ public class EditUserActivity extends AppCompatActivity {
 
     public static final int USER_PROFILE_ID = 11;
 
+    public static final int DELETE_PROFILE_ID = 12;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,5 +117,11 @@ public class EditUserActivity extends AppCompatActivity {
         Intent i = new Intent(this, UserProfileActivity.class);
         i.putExtra("cemail", collegeEmail);
         startActivityForResult(i, USER_PROFILE_ID);
+    }
+
+    public void onDeleteProfileClick(View v){
+        Intent i = new Intent(this, deleteUser.class);
+        i.putExtra("cemail", collegeEmail);
+        startActivityForResult(i, DELETE_PROFILE_ID);
     }
 }

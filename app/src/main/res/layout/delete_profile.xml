@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".MainActivity">
 
     <ImageView
@@ -32,23 +31,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageview_account_profile"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="0dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher_round"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView_account_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
@@ -63,9 +51,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="58dp"
-                    android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:text="Edit Profile"
+                    android:text="Delete Your Profile"
                     android:textSize="30sp" />
 
                 <LinearLayout
@@ -74,32 +61,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <EditText
-                        android:id="@+id/firstname"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="First Name" />
-
-                    <EditText
-                        android:id="@+id/lastname"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="Last Name" />
+                    android:padding="20dp">
 
 
-                    <EditText
-                        android:id="@+id/password"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="Password" />
 
-                    <EditText
-                        android:id="@+id/gradYear"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:hint="Graduation Year" />
 
                 </LinearLayout>
 
@@ -115,41 +80,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/save_button"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#8389AF4C"
-                android:text="Save"
-                android:onClick="onSaveClick"/>
-
-            <Button
-                android:id="@+id/cancel_button"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:backgroundTint="#8389AF4C"
-                android:text="Cancel"
-                android:onClick="onCancelClick"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/delete_button"
+                android:id="@+id/delete_prof_button"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:backgroundTint="#8389AF4C"
-                android:onClick="onDeleteProfileClick"
+                android:onClick="onDeleteClick"
                 android:text="Delete Profile"/>
 
         </LinearLayout>
