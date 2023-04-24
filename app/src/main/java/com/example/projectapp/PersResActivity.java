@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PersResActivity extends AppCompatActivity {
     public static final int ACCESS_ID = 4, CHOICE_ID = 7, AVAILRES_ID = 8, PADR_ID = 12;
-    private String output = "", email, choice, dorm;
+    private String output = "", email, choice, dorm, time;
     private List<String> allResSpinner = new ArrayList<>();
     private TextView textV;
 
@@ -34,6 +34,7 @@ public class PersResActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pers_res);
         email = getIntent().getStringExtra("cemail");
+        time = getIntent().getStringExtra("time");
         dorm = getIntent().getStringExtra("DormType");
 
         // Create/add intent here
@@ -134,7 +135,7 @@ public class PersResActivity extends AppCompatActivity {
     private void deleteRes() {
         //String[] choiceParts = choice.split("-");
         //String roomName = choiceParts[1].replaceAll(" ", "");
-        String param = "userEmail=" + email;
+        String param = "userEmail=" + email + "&time=" + time;
         String urlLink = "http://10.0.2.2:3000/deleteResApp?" + param;
 
         try {
