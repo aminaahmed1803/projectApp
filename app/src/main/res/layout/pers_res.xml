@@ -18,6 +18,15 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20dp" />
+        
+        // old button xml:
+        <Button android:id="@+id/deleteRoom"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_weight="1"
+        android:text="Delete Reservation"
+        android:onClick="onDeleteButtonClick" />
+
 
     </LinearLayout>
 
