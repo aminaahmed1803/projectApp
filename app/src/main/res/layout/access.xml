@@ -5,40 +5,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Access">
+    tools:context=".Access" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="180dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:text="Welcome!" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:text="Profile" />
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_horizontal"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:text="Choose an option:" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <Button android:id="@+id/settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="#A18C3F"
-            android:text="Settings"
-            android:onClick="onSettingsButtonClick" />
+            <Button
+                android:id="@+id/dorms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="onResButtonClick"
+                android:text="Reservations"
+                app:backgroundTint="#A18C3F" />
 
-        <Button android:id="@+id/dorms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="#A18C3F"
-            android:text="Dorms"
-            android:onClick="onDormsButtonClick" />
+            <Button
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="onSettingsButtonClick"
+                android:text="User Settings"
+                app:backgroundTint="#A18C3F" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

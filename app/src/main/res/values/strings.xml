@@ -2,6 +2,7 @@
     <string name="app_name">CommonRoom</string>
 
     <string-array name="dorm_array">
+        <item>None</item>
         <item>Brecon</item>
         <item>Denbigh</item>
         <item>New Dorm</item>

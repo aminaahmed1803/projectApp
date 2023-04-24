@@ -1,10 +1,12 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,18 +26,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-/**
- * This class contains the methods for the Room Activity's components.
- *
- * @gchoe
- */
-
 public class AvailRoomsActivity extends AppCompatActivity {
-    public static final int MAIN_ID = 1, CHOICE_ID = 7;
-    private String dorm, selectedDorm, output = "", choice;
+    public static final int DORMS_ID = 5, ACCESS_ID = 4, CHOICE_ID = 7;
+    private String dorm, selectedDorm, selectedRoom, email, output = "", choice, choiceRoom;
     private TextView textV;
-    private List<String> allRooms = new ArrayList<>();
-    public List<String> reservations = new ArrayList<>();
+    private List<String> allRoomSpinner = new ArrayList<>();
+    public List<String> allRoomsInfo = new ArrayList<>();
     private int highScore = 0;
 
     // onCreate method: Sets up the Activity when it is first created using the activity_quiz.xml
@@ -43,23 +40,26 @@ public class AvailRoomsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avail_rooms);
 
-        reservations = getIntent().getExtras().getStringArrayList("allReserve");
-        dorm = getIntent().getStringExtra("Dorm");
-        roomAppointmentMaker(dorm);
+        email = getIntent().getStringExtra("cemail");
+        dorm = getIntent().getStringExtra("DormType");
+        choiceRoom = getIntent().getStringExtra("RoomChoice");
+
+        roomAppointmentMaker(dorm, choiceRoom);
+
+        TextView dname = findViewById(R.id.dormInfo);
+
+        if (dorm.equals("None")) {
+            dname.setText("Selected dorm: All");
+        } else {
+            dname.setText("Selected dorm: " + dorm + "!");
+        }
 
         Spinner spinner = (Spinner) findViewById(R.id.res_spinner);
 
         // Creates an ArrayAdapter using the arraylist allDorms and a default spinner layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allRooms);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, allRoomSpinner);
         // Specifies the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-//        // Creates an ArrayAdapter using the string array "dorm_array" and a default spinner layout
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.allRooms, android.R.layout.simple_spinner_item);
-//        // Specifies the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Applies the adapter to the spinner
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -68,6 +68,7 @@ public class AvailRoomsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // An item (dormType) was selected and can be retrieved
                 choice = (String)parent.getItemAtPosition(pos);
+                System.out.println(choice);
             }
 
             // onNothingSelected method: Finds if nothing is selected
@@ -78,7 +79,7 @@ public class AvailRoomsActivity extends AppCompatActivity {
         });
     }
 
-    public void roomView(String dormNameInput) {
+    public void roomView(String dormNameInput, String roomNameInput) {
         textV = findViewById(R.id.roomInfo);
 
         try {
@@ -97,27 +98,51 @@ public class AvailRoomsActivity extends AppCompatActivity {
                         String line = scan.nextLine();
                         JSONArray jsArr = new JSONArray(line);
 
+                        int num = 1;
+
                         for (int i = 0; i < jsArr.length(); i++) {
                             JSONObject jsObj = (JSONObject) jsArr.get(i);
 
-                            String dormName = jsObj.getString("dorm");
+                            String roomN = jsObj.getString("name");
                             int capac = jsObj.getInt("capacity");
+                            String dormName = jsObj.getString("dorm");
                             int floor = jsObj.getInt("floor");
                             String timeS = jsObj.getString("timeSlots");
+                            String dateSlots = jsObj.getString("dateSlots");
                             boolean available = jsObj.getBoolean("avail");
 
-                            System.out.println("1BLAHBLAHBLAH" + dormNameInput);
+                            dormName = dormName.toLowerCase().replaceAll("\\s+","");
+                            String inputDorm = dorm.toLowerCase().replaceAll("\\s+","");
 
-                            String compName = dormName.toLowerCase().replaceAll("\\s+","");
-                            System.out.println("HO" + compName);
-                            System.out.println("SO" + dormNameInput);
-                            if (compName.equals(dormNameInput)) {
-                                System.out.println("STOPPPPP " + dormNameInput);
-                                output += "Room name: " + dormName + "\nCapacity: " + capac + "\nFloor: "
-                                    + floor + "\nTime Slots: " + timeS + "\nAvailability: " + available + "\n\n";
-                                String outputArr = "Room name: " + dormName + "\nCapacity: " + capac + "\nFloor: "
-                                        + floor + "\nTime Slots: " + timeS + "\nAvailability: " + available + "\n\n";
-                                allRooms.add(outputArr);
+                            roomN = roomN.toLowerCase().replaceAll("\\s+","");
+                            String inputRoom = choiceRoom.toLowerCase().replaceAll("\\s+","");
+
+                            String[] time = timeS.split(",");
+                            String outputArr = "";
+
+                            if (num > 1) {
+                                output += "\n";
+                            }
+
+                            if ((available == true) &&  (inputDorm.equals(dormName) || inputDorm.equals("none")) &&
+                                (inputRoom.equals(roomN) || inputRoom.equals("none"))) {
+                                output += "\t\t\t\tSlot " + num + "    Room name: " + roomN +
+                                    "\n\t\t\t\t               Capacity: " + capac +
+                                    "\n\t\t\t\t               Floor: " + floor +
+                                    "\n\t\t\t\t               Date: " + dateSlots +
+                                    "\n\t\t\t\t               Start Times (2 hours): " +
+                                    "\n\t\t\t\t               " + timeS;
+
+                                for (String t : time) {
+                                    String oneRoomInfo = "roomName=" + roomN + "&dorm=" + dormName +
+                                        "&floor=" + String.valueOf(floor) + "&date=" + dateSlots +
+                                        "&time=" + t;
+                                    allRoomsInfo.add(oneRoomInfo);
+                                    outputArr = "Slot " + num + " - Room name = " + roomN + "  Time = " + t;
+                                    allRoomSpinner.add(outputArr);
+                                }
+
+                                num++;
                             }
                         }
                     }
@@ -140,41 +165,114 @@ public class AvailRoomsActivity extends AppCompatActivity {
         }
     }
 
-    // questionMaker method:
-    // Randomly generates two numbers for the math question based on the selected difficulty. Does
-    // so by randomly generating each number one digit at a time. First finds the ones place and
-    // tens place for the first number then the ones place and the tens place for the second number.
-    public void roomAppointmentMaker(String dorm) {
+    public void roomAppointmentMaker(String dorm, String room) {
         selectedDorm = dorm.toLowerCase().replaceAll("\\s+","");
-        roomView(selectedDorm);
-
-//        if (dorm.equals("Brecon")) {
-//        } else if (dorm.equals("Denbigh")) {
-//        } else if (dorm.equals("New Dorm")) {
-//        } else if (dorm.equals("Erdman")) {
-//        } else if (dorm.equals("Merion")) {
-//        } else if (dorm.equals("Pembroke East")) {
-//        } else if (dorm.equals("Pembroke West")) {
-//        } else if (dorm.equals("Radnor")) {
-//        } else if (dorm.equals("Rhoads North")) {
-//        } else if (dorm.equals("Rhoads South")) {
-//        } else if (dorm.equals("Rockefeller")) {
-//        }
+        selectedRoom = room.toLowerCase().replaceAll("\\s+","");
+        roomView(selectedDorm, selectedRoom);
     }
 
-    public void onReserveButtonClick() {
-        reservations.add(choice);
-        Toast.makeText(getApplicationContext(), "Reservation made!", Toast.LENGTH_SHORT).show();
+    public void onReserveButtonClick(View v) {
+        try {
+            addReservation();
+            Toast toast = Toast.makeText(getApplicationContext(),"Reservation successful!", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 1030);
+            toast.show();
+        } catch (IOException ioe){
+            System.out.println(ioe);
+        }
     }
 
-    public void onBackButtonClick() {
-        Intent intentB = new Intent(this, Choice.class);
-        startActivityForResult(intentB, CHOICE_ID);
+    private void addReservation() throws IOException {
+        choice = choice.replaceAll("\\s+", "");
+        String[] choiceParts = choice.split("=");
+        String choiceRoom = choiceParts[1].replaceAll("Time", "");
+        String choiceTime = choiceParts[2];
+
+        System.out.println(choiceRoom + "    " + choiceTime);
+
+        String param = "";
+
+        for (String roomInfo : allRoomsInfo) {
+            if (roomInfo.contains(choiceRoom) && roomInfo.contains(choiceTime)) {
+                param = roomInfo + "&userEmail=" + email;
+            }
+        }
+
+        String urlLink = "http://10.0.2.2:3000/addUserReservation?" + param;
+
+        try {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+
+            executor.execute(() -> {
+                try {
+                    URL url = new URL(urlLink);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+
+                    try {
+                        Scanner in = null;
+                        conn.connect();
+
+                        // Now the response comes back
+                        int responseCode = conn.getResponseCode();
+
+                        // Makes sure the response has "200 OK" as the status
+                        if (responseCode != 200) {
+                            System.out.println("Unexpected status code: " + responseCode);
+                        } else {
+                            // Made it here, we got a good response, let's read it
+                            in = new Scanner(url.openStream());
+
+                            while (in.hasNext()) {
+                                String line = in.nextLine();
+                            }
+                        }
+                    } catch (java.net.ConnectException c) {
+                        c.printStackTrace();
+                    }
+                } catch (Exception a) {
+                    a.printStackTrace();
+                }
+            });
+
+            executor = Executors.newSingleThreadExecutor();
+            try {
+                executor.awaitTermination(2, TimeUnit.SECONDS);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+
+        } finally {
+            try {
+
+            } catch (Exception f) {
+
+            }
+        }
+    }
+
+    public void onBackButtonClick(View v) {
+        Intent intentC = new Intent(this, DormSelection.class);
+        intentC.putExtra("DormType", dorm);
+        intentC.putExtra("cemail", email);
+//        Bundle bundle = new Bundle();
+//        bundle.putStringArrayList("Res", allRes);
+//        intentC.putExtras(bundle);
+        startActivityForResult(intentC, DORMS_ID);
+    }
+
+    public void onResButtonClick(View v) {
+        Intent intentD = new Intent(this, Choice.class);
+        intentD.putExtra("cemail", email);
+        intentD.putExtra("DormType", dorm);
+        startActivityForResult(intentD, CHOICE_ID);
     }
 
     // onHomePageButtonClick method: Used when the "Home Page" button is clicked (activity_quiz.xml)
     public void onHomePageButtonClick(View v) {
-        Intent intentMA = new Intent(this, DormSelection.class);
-        startActivityForResult(intentMA, MAIN_ID);
+        Intent intentA = new Intent(this, Access.class);
+        intentA.putExtra("cemail", email);
+        intentA.putExtra("DormType", dorm);
+        startActivityForResult(intentA, ACCESS_ID);
     }
 }

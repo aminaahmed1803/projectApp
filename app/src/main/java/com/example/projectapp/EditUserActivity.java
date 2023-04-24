@@ -1,4 +1,4 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,20 +19,19 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditUserActivity extends AppCompatActivity {
     String collegeEmail, studentID, firstName, lastName, gradYear, password;
 
-    public static final int USER_PROFILE_ID = 11;
+    public static final int ACCESS_ID = 4, USER_PROFILE_ID = 11, DELETE_PROFILE_ID = 12;
 
-    public static final int DELETE_PROFILE_ID = 12;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile);
-        collegeEmail = getIntent().getStringExtra("College Email");
+        collegeEmail = getIntent().getStringExtra("cemail");
+        System.out.println("College Email!!  " + collegeEmail);
         studentID = getIntent().getStringExtra("Student ID");
     }
 
     public void onSaveClick(View v) {
-
         EditText a = (EditText) findViewById(R.id.firstname);
         EditText b = (EditText) findViewById(R.id.lastname);
         EditText c = (EditText) findViewById(R.id.gradYear);
@@ -62,10 +61,10 @@ public class EditUserActivity extends AppCompatActivity {
     }
 
     private void editUser() throws IOException {
-
         String param = "firstName="+firstName + "&lastName="+lastName +"&id=" + studentID + "&classYear="+ gradYear + "&collegeEmail=" + collegeEmail+ "&password="+ password;
         String link = "http://10.0.2.2:3000/editUser?";
         System.out.println(param);
+
         try {
             ExecutorService executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
@@ -119,8 +118,13 @@ public class EditUserActivity extends AppCompatActivity {
         startActivityForResult(i, USER_PROFILE_ID);
     }
 
+    public void onHomePageButtonClick(View v) {
+        Intent intentA = new Intent(this, Access.class);
+        startActivityForResult(intentA, ACCESS_ID);
+    }
+
     public void onDeleteProfileClick(View v){
-        Intent i = new Intent(this, deleteUser.class);
+        Intent i = new Intent(this, DeleteUser.class);
         i.putExtra("cemail", collegeEmail);
         startActivityForResult(i, DELETE_PROFILE_ID);
     }

@@ -1,4 +1,4 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SignUp extends AppCompatActivity {
+public class SignUp  extends AppCompatActivity {
     int MAIN_ID = 1;
 
     protected void onCreate(Bundle savedInstanceState) {

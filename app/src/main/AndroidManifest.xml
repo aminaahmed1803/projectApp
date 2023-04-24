@@ -35,9 +35,8 @@
         <activity android:name=".Choice"/>
         <activity android:name=".PersResActivity"/>
         <activity android:name=".AvailRoomsActivity"/>
-        <activity android:name=".DeleteDorm" />
-        <activity android:name=".TestHomePage"/>
-        <activity android:name=".deleteUser"/>
+        <activity android:name=".PageAfterDeleteRes"/>
+        <activity android:name=".DeleteUser"/>
     </application>
 
 </manifest>

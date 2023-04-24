@@ -1,4 +1,4 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -80,7 +80,8 @@ public class Login extends AppCompatActivity {
                                     if (count == 1) {
                                         System.out.println(cE);
                                         Intent intent = new Intent(this, Access.class);
-                                        intent.putExtra("College Email", cE);
+                                        String email = cE;
+                                        intent.putExtra("cemail", email);
                                         startActivityForResult(intent, ACCESS_ID);
                                     }
                                 }

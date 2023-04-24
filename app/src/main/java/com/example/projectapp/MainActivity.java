@@ -1,4 +1,4 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 

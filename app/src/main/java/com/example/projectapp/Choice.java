@@ -1,4 +1,4 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,84 +8,50 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-/**
- * This class contains the methods for the Main Activity components.
- *
- * @gchoe
- */
-
 public class Choice extends AppCompatActivity {
-    public static final int AVAILRES_ID = 8, PERSRES_ID = 9;
-    private String dorm;
-    ArrayList<String> allRes = new ArrayList<>();
+    public static final int ACCESS_ID = 4, DORMS_ID = 5, PERSRES_ID = 9;
+    private String dorm, email;
 
     // onCreate method: Sets up the Activity when it is first created using the activity_main.xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choice);
-
         dorm = getIntent().getStringExtra("DormType");
-        allRes = getIntent().getExtras().getStringArrayList("Res");
+        email = getIntent().getStringExtra("cemail");
     }
 
     // onStartButtonClick method: Used when start button is clicked (activity_main.xml)
     public void onAvailResClick(View v) {
         // Creates an Intent using the current Activity and the class to be created
-        Intent intentAR = new Intent(this, AvailRoomsActivity.class);
+        Intent intentAR = new Intent(this, DormSelection.class);
         // Arguments passed into the new Activity using key/value pairs in the Intent
-        intentAR.putExtra("Dorm", dorm);
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("allReserve", allRes);
-        intentAR.putExtras(bundle);
-        // Passes the Intent to the Activity, using the request code
-        startActivityForResult(intentAR, AVAILRES_ID);
+        intentAR.putExtra("DormType", dorm);
+        intentAR.putExtra("cemail", email);
+        startActivityForResult(intentAR, DORMS_ID);
     }
-
-//    public void onNextButtonClick(View v) {
-//        // Creates an Intent using the current Activity and the class to be created
-//        Intent intentC = new Intent(this, Choice.class);
-//        // Arguments passed into the new Activity using key/value pairs in the Intent
-//        intentC.putExtra("DormType", dormType);
-//        // Passes the Intent to the Activity, using the request code
-//        startActivityForResult(intentC, CHOICE_ID);
-//    }
 
     public void onPersResClick(View v) {
         // Creates an Intent using the current Activity and the class to be created
         Intent intentPR = new Intent(this, PersResActivity.class);
         // Arguments passed into the new Activity using key/value pairs in the Intent
-        intentPR.putExtra("Dorm", dorm);
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("allReserve", allRes);
-        intentPR.putExtras(bundle);
-        // Passes the Intent to the Activity, using the request code
+        intentPR.putExtra("DormType", dorm);
+        intentPR.putExtra("cemail", email);
         startActivityForResult(intentPR, PERSRES_ID);
     }
 
-
-    public void onHomePageButtonClick(View v) {
-        // Creates an Intent using the current Activity and the class to be created
-        Intent intentMA = new Intent(this, DormSelection.class);
-        setResult(RESULT_OK, intentMA);
-        finish();
-    }
-
-//    // onActivityResult method: Gets called when an Activity finishes
-//    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-//        super.onActivityResult(requestCode, resultCode, intent);
-//
-//        // The requestCode tells us which Activity just ended
-//        switch (requestCode) {
-//            case ROOM_ACTIVITY_ID:
-//                // Gets the number of correct answers gotten in a row from the currently finished
-//                // round of playing the math game. (Not the highest possible score from all plays,
-//                // just for that one round of playing the game.)
-//                int highestScore = intent.getIntExtra("HighestScore", 0);
-//                // Displays the highest personal score as a pop-up so the Activity screen is not
-//                // clustered.
-//                Toast.makeText(this, "Highest Score: " + highestScore, Toast.LENGTH_LONG).show();
-//                break;
-//        }
+//    public void onDormButtonClick(View v) {
+//        Intent intentD = new Intent(this, DormSelection.class);
+//        intentD.putExtra("cemail", email);
+//        intentD.putExtra("DormType", dorm);
+//        startActivityForResult(intentD, DORMS_ID);
 //    }
+
+    // onHomePageButtonClick method: Used when the "Home Page" button is clicked (activity_quiz.xml)
+    public void onHomePageButtonClick(View v) {
+        Intent intentA = new Intent(this, Access.class);
+        intentA.putExtra("cemail", email);
+        intentA.putExtra("DormType", dorm);
+        startActivityForResult(intentA, ACCESS_ID);
+    }
 }

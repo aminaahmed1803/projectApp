@@ -1,4 +1,4 @@
-package com.example.projectapp;
+package com.example.commonroom;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -16,29 +16,32 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class deleteUser extends AppCompatActivity {
+public class DeleteUser extends AppCompatActivity {
 
-    private String collegeEmail;
+    private String collegeEmail, dorm;
 
     public static final int MAIN_ID = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dorm = getIntent().getStringExtra("DormType");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.delete_profile);
+        setContentView(R.layout.delete_user);
         collegeEmail = getIntent().getStringExtra("cemail");
+        System.out.println("COLLEGE EMAIL" +collegeEmail);
     }
 
     public void onDeleteClick(View v){
         deleteReq();
         Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("DormType", dorm);
         startActivityForResult(i, MAIN_ID);
     }
 
     private void deleteReq() {
 
         String param = "collegeEmail=" + collegeEmail;
-        String link = "http://10.0.2.2:3000/deleteUser?";
+        String link = "http://10.0.2.2:3000/deleteAppUser?";
         System.out.println(param);
         try {
             ExecutorService executor = Executors.newSingleThreadExecutor();

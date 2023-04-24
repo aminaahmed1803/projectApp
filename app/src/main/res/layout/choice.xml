@@ -10,45 +10,87 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/homePageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxWidth="60dp"
+            android:maxHeight="60dp"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="3dp"
+            android:src="@drawable/home"
+            android:onClick="onHomePageButtonClick"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:text="Reservations" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:background="@color/yellow0">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="20dp"
+                android:text="Choose type to view: " />
 
             <Button android:id="@+id/perRes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:text="Personal Reservations"
+                app:backgroundTint="#A18C3F"
+                android:text="My Reservations"
                 android:onClick="onPersResClick" />
 
             <Button android:id="@+id/availRooms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginRight="10dp"
+                app:backgroundTint="#A18C3F"
                 android:text="Available Rooms"
                 android:onClick="onAvailResClick" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:gravity="center">-->
 
-            <Button android:id="@+id/home"
-                android:layout_width="125dp"
-                android:layout_height="75dp"
-                android:layout_weight="1"
-                app:backgroundTint="#A18C3F"
-                android:text="Home Page"
-                android:onClick="onHomePageButtonClick" />
-        </LinearLayout>
+<!--            <Button android:id="@+id/home"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                app:backgroundTint="#A18C3F"-->
+<!--                android:text="Change Dorm"-->
+<!--                android:onClick="onDormButtonClick" />-->
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 
