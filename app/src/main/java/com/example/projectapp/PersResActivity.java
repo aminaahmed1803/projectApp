@@ -134,7 +134,7 @@ public class PersResActivity extends AppCompatActivity {
     private void deleteRes() {
         //String[] choiceParts = choice.split("-");
         //String roomName = choiceParts[1].replaceAll(" ", "");
-        String param = "collegeEmail=" + cemail;
+        String param = "userEmail=" + email;
         String urlLink = "http://10.0.2.2:3000/deleteResApp?" + param;
 
         try {
